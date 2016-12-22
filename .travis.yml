@@ -4,7 +4,7 @@ jdk: oraclejdk8
 cache:
   directories:
   - "$HOME/.m2"
-  - "sonar-scanner"
+  - sonar-scanner
 before_install:
 - openssl aes-256-cbc -K $encrypted_ad7a8f916345_key -iv $encrypted_ad7a8f916345_iv
   -in travis-encrypted.tar.enc -out travis-encrypted.tar -d
