@@ -153,6 +153,7 @@
             <id>jacoco-site</id>
             <phase>package</phase>
             <goals>
+              <goal>dump</goal>
               <goal>report</goal>
             </goals>
           </execution>
