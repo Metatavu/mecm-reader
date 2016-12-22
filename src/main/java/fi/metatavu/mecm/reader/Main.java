@@ -14,9 +14,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
+import fi.metatavu.mecm.reader.mecm.MecmReader;
 import fi.metatavu.mecm.reader.model.Merex;
 import fi.metatavu.mecm.reader.vcard.VCardConverter;
 
@@ -32,7 +30,7 @@ public class Main {
   private Main() {
   }
   
-  @SuppressWarnings ("squid:S1301")
+  @SuppressWarnings ({"squid:S106", "squid:S1301", "squid:S1166"})
   public static void main(String[] args) throws ParseException {
     CommandLine commandLine = handleOptions(args);
     if (commandLine == null) {
@@ -43,18 +41,27 @@ public class Main {
     File inputFile = new File(commandLine.getOptionValue(OPTION_INPUT));
     File outputFile = new File(commandLine.getOptionValue(OPTION_OUTPUT));
     String organizationId = commandLine.getOptionValue(OPTION_ORGANIZATION);
-    String uriTemplate = commandLine.getOptionValue(OPTION_URI_TEMPLATE);
     
-    Merex merex = readMerex(inputFile);
-    if (merex == null) {
+    MecmReader mecmReader = new MecmReader();
+    
+    Merex merex;
+    try {
+      merex = mecmReader.readMecm(inputFile);
+      if (merex == null) {
+        System.exit(-1);
+      }
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
       System.exit(-1);
+      return;
     }
     
     switch (outputFormat) {
       case VCARD:
-      if (!convertToVCard(outputFile, organizationId, uriTemplate, merex)) {
-        System.exit(-1);
-      }
+        String uriTemplate = commandLine.getOptionValue(OPTION_URI_TEMPLATE);
+        if (!convertToVCard(outputFile, organizationId, uriTemplate, merex)) {
+          System.exit(-1);
+        }
       break;
       default:
     }
@@ -90,19 +97,6 @@ public class Main {
   private static void printHelp(Options options) {
     HelpFormatter helpFormatter = new HelpFormatter();
     helpFormatter.printHelp("java -jar mecm-reader.jar", options);
-  }
-
-  @SuppressWarnings ({"squid:S106", "squid:S1166"})
-  private static Merex readMerex(File inputFile) {
-    XmlMapper xmlMapper = new XmlMapper();
-    xmlMapper.registerModule(new JavaTimeModule());
-    try {
-      return xmlMapper.readValue(inputFile, Merex.class);
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
-    }
-    
-    return null;
   }
   
   @SuppressWarnings ({"squid:S106", "squid:S1166"})
