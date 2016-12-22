@@ -73,7 +73,7 @@
     <!-- Tests -->
     
     <junit.version>4.12</junit.version>
-    <jacoco.reportPath>${project.reporting.outputDirectory}/jacoco/jacoco.xml</jacoco.reportPath>
+    <jacoco.reportPath>${project.basedir}/target/jacoco.exec</jacoco.reportPath>
   </properties>
 
   <dependencies>
@@ -151,7 +151,7 @@
           </execution>
           <execution>
             <id>jacoco-site</id>
-            <phase>package</phase>
+            <phase>test</phase>
             <goals>
               <goal>dump</goal>
               <goal>report</goal>
