@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<mx:merex xmlns:mx="http://www.teliasonera.com/merex/xmlio">
+  <mx:persons>
+    <mx:person merexid="1234" customerid="1" hidden="0">
+      <mx:created time="2016-01-02T03:04:05+02:00" actor="test.creator@example.com"/>
+      <mx:modified time="2017-01-02T03:04:05+02:00" actor="test.modifier@example.com"/>
+      <mx:name>Test Person</mx:name>
+      <mx:nick1>Nick Name 1</mx:nick1>
+      <mx:nick2></mx:nick2>
+      <mx:nick3></mx:nick3>
+      <mx:nick4></mx:nick4>
+      <mx:number>123456</mx:number>
+      <mx:mobile_nbr>+358 50 123 4567</mx:mobile_nbr>
+      <mx:other_nbr>0987654321</mx:other_nbr>
+      <mx:substitute_nbr>1357924680</mx:substitute_nbr>
+      <mx:secretary_nbr>123581321</mx:secretary_nbr>
+      <mx:spare_nbr>248163264128</mx:spare_nbr>
+      <mx:add_nbr1>1231234</mx:add_nbr1>
+      <mx:add_nbr2>6543210</mx:add_nbr2>
+      <mx:add_nbr3></mx:add_nbr3>
+      <mx:add_nbr4></mx:add_nbr4>
+      <mx:add_nbr5></mx:add_nbr5>
+      <mx:add_nbr6></mx:add_nbr6>
+      <mx:task1 type="list">
+        <mx:item index="1">testing</mx:item>
+        <mx:item index="2">integration testing</mx:item>
+      </mx:task1>
+      <mx:task2></mx:task2>
+      <mx:task3></mx:task3>
+      <mx:task4></mx:task4>
+      <mx:task5></mx:task5>
+      <mx:task6></mx:task6>
+      <mx:task7></mx:task7>
+      <mx:task8></mx:task8>
+      <mx:task9></mx:task9>
+      <mx:task10></mx:task10>
+      <mx:task11></mx:task11>
+      <mx:task12></mx:task12>
+      <mx:task13></mx:task13>
+      <mx:task14></mx:task14>
+      <mx:title1>tester</mx:title1>
+      <mx:title2></mx:title2>
+      <mx:title3></mx:title3>
+      <mx:visit_address>Test street 123</mx:visit_address>
+      <mx:mail_address>12345 Testia</mx:mail_address>
+      <mx:room>Test room</mx:room>
+      <mx:fax>987987666</mx:fax>
+      <mx:location>Test location</mx:location>
+      <mx:company>Test company</mx:company>
+      <mx:department type="tree">
+        <mx:item index="1">Test services</mx:item>
+        <mx:item index="2">Testers</mx:item>
+        <mx:item index="3">Integration testers</mx:item>
+      </mx:department>
+      <mx:group>Testers</mx:group>
+      <mx:refs>
+        <mx:substitute target="merexid">123</mx:substitute>
+        <mx:substitute_2 target="merexid"></mx:substitute_2>
+        <mx:secretary target="merexid">456</mx:secretary>
+        <mx:secretary_2 target="merexid"></mx:secretary_2>
+        <mx:manager target="merexid">567</mx:manager>
+      </mx:refs>
+      <mx:person_id></mx:person_id>
+      <mx:cc></mx:cc>
+      <mx:e-mail>test.person@example.com</mx:e-mail>
+      <mx:pbx>TEST</mx:pbx>
+      <mx:wts>
+        <mx:wt id="1111">
+          <mx:device>Test device</mx:device>
+          <mx:card>2222</mx:card>
+        </mx:wt>
+      </mx:wts>
+      <mx:memos>
+        <mx:memo id="12345" priority="255">
+          <mx:creator>memo.creator@example.com</mx:creator>
+          <mx:header>Test header</mx:header>
+          <mx:body>Test text</mx:body>
+        </mx:memo>
+      </mx:memos>
+      <mx:statuses>
+        <mx:status id="98765">
+          <mx:creator>Test Creator</mx:creator>
+          <mx:reason>Testing</mx:reason>
+          <mx:comment>Testing away</mx:comment>
+          <mx:departure>2017-06-05T00:00:00+02:00</mx:departure>
+          <mx:arrival>2017-06-06T00:00:00+02:00</mx:arrival>
+        </mx:status>
+      </mx:statuses>
+    </mx:person>
+  </mx:persons>
+</mx:merex>
