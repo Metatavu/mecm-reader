@@ -151,7 +151,7 @@
           </execution>
           <execution>
             <id>jacoco-site</id>
-            <phase>test</phase>
+            <phase>package</phase>
             <goals>
               <goal>dump</goal>
               <goal>report</goal>
