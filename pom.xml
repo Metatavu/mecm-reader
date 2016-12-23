@@ -192,7 +192,7 @@
               <useReleaseProfile>false</useReleaseProfile>
               <tagNameFormat>@{project.version}</tagNameFormat>
               <autoVersionSubmodules>true</autoVersionSubmodules>
-              <arguments>-Psonatype-oss-release</arguments>
+              <arguments>-Dgpg.passphrase=${env.PGP_PASSPHRASE} -Psonatype-oss-release</arguments>
             </configuration>
           </plugin>
           
