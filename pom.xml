@@ -74,6 +74,8 @@
     
     <junit.version>4.12</junit.version>
     <jacoco.reportPath>${project.basedir}/target/jacoco.exec</jacoco.reportPath>
+    <skipCoverage>true</skipCoverage>
+    
   </properties>
 
   <dependencies>
@@ -165,6 +167,9 @@
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <skip>${skipCoverage}</skip>
+            </configuration>
           </execution>
         </executions>
       </plugin>
