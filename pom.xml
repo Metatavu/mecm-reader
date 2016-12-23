@@ -192,7 +192,7 @@
               <useReleaseProfile>false</useReleaseProfile>
               <tagNameFormat>@{project.version}</tagNameFormat>
               <autoVersionSubmodules>true</autoVersionSubmodules>
-              <arguments>-Dgpg.passphrase=${env.PGP_PASSPHRASE} -Dgpg.homedir=${project.build.directory}/../.gnupg -Psonatype-oss-release</arguments>
+              <arguments>-Psonatype-oss-release</arguments>
             </configuration>
           </plugin>
           
