@@ -271,7 +271,7 @@ public class VCardConverter {
     Address address = new Address();
     
     if (!mailAddressBlank) {
-      address.setPoBox(mailAddress);
+      address.setRegion(mailAddress);
     }
       
     if (!roomBlank) {
