@@ -73,7 +73,7 @@ public class Main {
     
     options.addOption(createOption(true, "i", OPTION_INPUT, true, "Input file name (MECM)"));
     options.addOption(createOption(true, "f", OPTION_OUTPUT_FORMAT, true, String.format("Format the input file will be converted. Poosible values: %s", StringUtils.join(OutputFormat.values(), ","))));
-    options.addOption(createOption(true, "o", OPTION_OUTPUT, true, "Output file name)"));
+    options.addOption(createOption(true, "o", OPTION_OUTPUT, true, "Output file name"));
     options.addOption(createOption(true, "O", OPTION_ORGANIZATION, true, "Organization Id"));
     options.addOption(createOption(false, "t", OPTION_URI_TEMPLATE, true, "URI Template. Use %s as placeholder for id"));
     options.addOption(createOption(false, "h", OPTION_HELP, false, "Prints help"));
