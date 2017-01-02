@@ -2,6 +2,7 @@ package fi.metatavu.mecm.reader.vcard;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,8 +96,9 @@ public class ConverterTest {
     List<Address> addresses = vCard.getAddresses();
     assertEquals(1, addresses.size());
     assertEquals("Test street 123", addresses.get(0).getStreetAddress());
-    assertEquals("12345 Testia", addresses.get(0).getPoBox());
+    assertEquals("12345 Testia", addresses.get(0).getRegion());
     assertEquals("Test room", addresses.get(0).getExtendedAddress());
+    assertNull(addresses.get(0).getPoBox());
   }
 
   @Test
