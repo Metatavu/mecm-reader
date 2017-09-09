@@ -96,7 +96,8 @@ public class ConverterTest {
     List<Address> addresses = vCard.getAddresses();
     assertEquals(1, addresses.size());
     assertEquals("Test street 123", addresses.get(0).getStreetAddress());
-    assertEquals("12345 Testia", addresses.get(0).getRegion());
+    assertEquals("Testia", addresses.get(0).getLocality());
+    assertEquals("12345", addresses.get(0).getPostalCode());
     assertEquals("Test room", addresses.get(0).getExtendedAddress());
     assertNull(addresses.get(0).getPoBox());
   }
