@@ -271,7 +271,14 @@ public class VCardConverter {
     Address address = new Address();
     
     if (!mailAddressBlank) {
-      address.setRegion(mailAddress);
+      if (mailAddress.matches("^[0-9]{5}.*")) {
+        String postalCode = StringUtils.trim(mailAddress.substring(0, 5));
+        String locality = StringUtils.trim(mailAddress.substring(5));
+        address.setPostalCode(postalCode);
+        address.setLocality(locality);
+      } else {
+        address.setLocality(mailAddress); 
+      }
     }
       
     if (!roomBlank) {
@@ -280,10 +287,6 @@ public class VCardConverter {
       
     if (!visitAddressBlank) {
       address.setStreetAddress(visitAddress);
-    }
-    
-    if (!locationBlank) {
-      address.setLocality(location);
     }
     
     vCard.addAddress(address);
