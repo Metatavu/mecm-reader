@@ -25,12 +25,12 @@
         <mx:item index="1">testing</mx:item>
         <mx:item index="2">integration testing</mx:item>
       </mx:task1>
-      <mx:task2></mx:task2>
+      <mx:task2>open 9-16</mx:task2>
       <mx:task3></mx:task3>
       <mx:task4></mx:task4>
       <mx:task5></mx:task5>
       <mx:task6></mx:task6>
-      <mx:task7></mx:task7>
+      <mx:task7>1</mx:task7>
       <mx:task8></mx:task8>
       <mx:task9></mx:task9>
       <mx:task10></mx:task10>
