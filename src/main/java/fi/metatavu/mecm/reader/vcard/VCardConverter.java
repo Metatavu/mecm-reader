@@ -66,6 +66,11 @@ public class VCardConverter {
   public static final String MECM_ADDITIONAL_PBX = "mecm-pbx";
   public static final String MECM_ADDITIONAL_WT_JSON = "mecm-wt-json";
   public static final String MECM_ADDITIONAL_STATUS_JSON = "mecm-status-json";
+  public static final String MECM_ADDITIONAL_PRIVATE = "X-MECM-PRIVATE";
+  public static final String MECM_ADDITIONAL_NO_CALLS = "X-MECM-NO-CALLS";
+
+  private static final String MECM_TASK1_PRIVATE = "EI JULKINEN";
+  private static final String MECM_TASK1_NO_CALLS = "EI PUHELUITA";
 
   public void toVCardFile(String organizationId, String uriTemplate, Merex merex, File outputFile) throws IOException {
     List<VCard> vCards = toVCards(organizationId, uriTemplate, merex);
@@ -236,20 +241,18 @@ public class VCardConverter {
       noteBuilder.append(memo.getBody());
     }
     
-    if (noteBuilder.length() > 0) {
+    if (noteBuilder.length() > 0 && memo.getId() != null) {
+      Note note = new Note(noteBuilder.toString());
+      
       if (memo.getId() != null) {
-        Note note = new Note(noteBuilder.toString());
-        
-        if (memo.getId() != null) {
-          note.addParameter(MECM_NOTE_ID, String.valueOf(memo.getId()));
-        }
-
-        if (memo.getPriority() != null) {
-          note.addParameter(MECM_NOTE_PRIORITY, String.valueOf(memo.getPriority()));
-        }
-        
-        vCard.addNote(note);
+        note.addParameter(MECM_NOTE_ID, String.valueOf(memo.getId()));
       }
+
+      if (memo.getPriority() != null) {
+        note.addParameter(MECM_NOTE_PRIORITY, String.valueOf(memo.getPriority()));
+      }
+      
+      vCard.addNote(note);
     }
   }
 
@@ -292,14 +295,25 @@ public class VCardConverter {
     vCard.addAddress(address);
   }
 
+  @SuppressWarnings ("squid:S3776")
   private void handleTasks(Person person, VCard vCard) {
+    boolean privateCard = false;
+    boolean noCalls = false;
+    
     if (person.getTask1() != null) {
       Categories categories = new Categories();
       categories.addParameter(MECM_TYPE, MECM_TYPE_CATEGORY_TASK);
 
       for (Task task : person.getTask1()) {
         if (StringUtils.isNotBlank(task.getText())) {
-          categories.getValues().add(task.getText());
+          String taskText = task.getText();
+          if (MECM_TASK1_PRIVATE.equals(taskText)) {
+            privateCard = true;
+          } else if (MECM_TASK1_NO_CALLS.equals(taskText)) {
+            noCalls = true;
+          } else {
+            categories.getValues().add(task.getText());
+          }
         }
       }
 
@@ -307,6 +321,9 @@ public class VCardConverter {
         vCard.addCategories(categories);
       }
     }
+
+    vCard.addExtendedProperty(MECM_ADDITIONAL_PRIVATE, privateCard ? "true" : "false");
+    vCard.addExtendedProperty(MECM_ADDITIONAL_NO_CALLS, noCalls ? "true" : "false");
   }
 
   private Date toDate(OffsetDateTime dateTime) {

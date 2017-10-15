@@ -42,7 +42,7 @@ public class ConverterTest {
     String cardId = createId("1234");
     OffsetDateTime modified = OffsetDateTime.of(2017, 1, 2, 3, 4, 5, 0, ZoneOffset.ofHours(2));
     Date modifiedDate = Date.from(modified.toInstant());
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
     
     assertEquals(cardId, vCard.getUid().getValue());
     assertEquals(modifiedDate, vCard.getRevision().getValue());
@@ -55,7 +55,7 @@ public class ConverterTest {
 
   @Test
   public void testNumbers() {
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
 
     List<Telephone> numbers = vCard.getTelephoneNumbers();
     assertEquals(9, numbers.size());
@@ -72,7 +72,7 @@ public class ConverterTest {
   
   @Test
   public void testCategories() {    
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
     
     List<String> categories = vCard.getCategories().getValues();
     assertEquals(2, categories.size());
@@ -82,7 +82,7 @@ public class ConverterTest {
 
   @Test
   public void testTitles() {    
-    VCard vCard = loadTestCard();    
+    VCard vCard = loadTestCard(0);    
     
     List<Title> titles = vCard.getTitles();
     assertEquals(1, titles.size());
@@ -91,7 +91,7 @@ public class ConverterTest {
 
   @Test
   public void testAddresses() {    
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
     
     List<Address> addresses = vCard.getAddresses();
     assertEquals(1, addresses.size());
@@ -104,7 +104,7 @@ public class ConverterTest {
 
   @Test
   public void testRelations() {    
-    VCard vCard = loadTestCard();  
+    VCard vCard = loadTestCard(0);  
     
     assertEquals(3, vCard.getRelations().size());
     assertRelation(vCard.getRelations().get(0), "567", VCardConverter.MECM_TYPE_RELATION_MANAGER);
@@ -114,7 +114,7 @@ public class ConverterTest {
 
   @Test
   public void testNotes() {    
-    VCard vCard = loadTestCard();    
+    VCard vCard = loadTestCard(0);    
     List<Note> notes = vCard.getNotes();
     assertEquals(1, notes.size());
     assertEquals("Test header\nTest text", notes.get(0).getValue());
@@ -124,7 +124,7 @@ public class ConverterTest {
   
   @Test
   public void testOrganizations() {    
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
     
     List<Organization> organizations = vCard.getOrganizations();
     assertEquals(5, organizations.size());
@@ -137,7 +137,7 @@ public class ConverterTest {
   
   @Test
   public void testWts() throws IOException, JsonParseException, JsonMappingException {
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
     
     List<RawProperty> wtsProperties = vCard.getExtendedProperties(VCardConverter.MECM_ADDITIONAL_WT_JSON);
     assertEquals(1, wtsProperties.size());
@@ -149,7 +149,7 @@ public class ConverterTest {
 
   @Test
   public void testStatus() throws IOException, JsonParseException, JsonMappingException {
-    VCard vCard = loadTestCard();
+    VCard vCard = loadTestCard(0);
     
     List<RawProperty> statusProperties = vCard.getExtendedProperties(VCardConverter.MECM_ADDITIONAL_STATUS_JSON);
     Status status = readJSON(Status.class, statusProperties.get(0).getValue());
@@ -161,8 +161,26 @@ public class ConverterTest {
     assertEquals(OffsetDateTime.of(2017, 6, 5, 0, 0, 0, 0, ZoneOffset.ofHours(2)).toInstant(), status.getDeparture().toInstant());
     assertEquals(OffsetDateTime.of(2017, 6, 6, 0, 0, 0, 0, ZoneOffset.ofHours(2)).toInstant(), status.getArrival().toInstant());
   }
+  
+  @Test
+  public void testPrivateCard() {
+    VCard vCard1 = loadTestCard(0);
+    VCard vCard2 = loadTestCard(1);
 
-  private VCard loadTestCard() {
+    assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+  }
+
+  @Test
+  public void testNoCalls() {
+    VCard vCard1 = loadTestCard(0);
+    VCard vCard2 = loadTestCard(1);
+
+    assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
+    assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
+  }
+
+  private VCard loadTestCard(int index) {
     MecmReader mecmReader = new MecmReader();
     InputStream xmlStream = getClass().getClassLoader().getResourceAsStream("persons.xml");
     assertNotNull(xmlStream);
@@ -172,8 +190,8 @@ public class ConverterTest {
     
     VCardConverter vCardConverter = new VCardConverter();
     List<VCard> vCards = vCardConverter.toVCards(ORGANIZATION_ID, URI_TEMPLATE, merex);
-    assertEquals(1, vCards.size());
-    VCard vCard = vCards.get(0);
+    assertEquals(2, vCards.size());
+    VCard vCard = vCards.get(index);
     
     assertNotNull(vCard);
     
