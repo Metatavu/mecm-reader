@@ -163,16 +163,16 @@ public class ConverterTest {
   }
   
   @Test
-  public void testPrivateNumber() throws IOException, JsonParseException, JsonMappingException {
+  public void testPrivateCard() {
     VCard vCard1 = loadTestCard(0);
     VCard vCard2 = loadTestCard(1);
 
-    assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE_NUMBER).getValue());
-    assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE_NUMBER).getValue());
+    assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
   }
 
   @Test
-  public void testNoCalls() throws IOException, JsonParseException, JsonMappingException {
+  public void testNoCalls() {
     VCard vCard1 = loadTestCard(0);
     VCard vCard2 = loadTestCard(1);
 

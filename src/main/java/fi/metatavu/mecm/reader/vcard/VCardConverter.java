@@ -66,10 +66,10 @@ public class VCardConverter {
   public static final String MECM_ADDITIONAL_PBX = "mecm-pbx";
   public static final String MECM_ADDITIONAL_WT_JSON = "mecm-wt-json";
   public static final String MECM_ADDITIONAL_STATUS_JSON = "mecm-status-json";
-  public static final String MECM_ADDITIONAL_PRIVATE_NUMBER = "X-MECM-PRIVATE-NUMBER";
+  public static final String MECM_ADDITIONAL_PRIVATE = "X-MECM-PRIVATE";
   public static final String MECM_ADDITIONAL_NO_CALLS = "X-MECM-NO-CALLS";
 
-  private static final String MECM_TASK1_PRIVATE_NUMBER = "EI JULKINEN";
+  private static final String MECM_TASK1_PRIVATE = "EI JULKINEN";
   private static final String MECM_TASK1_NO_CALLS = "EI PUHELUITA";
 
   public void toVCardFile(String organizationId, String uriTemplate, Merex merex, File outputFile) throws IOException {
@@ -297,7 +297,7 @@ public class VCardConverter {
 
   @SuppressWarnings ("squid:S3776")
   private void handleTasks(Person person, VCard vCard) {
-    boolean privateNumber = false;
+    boolean privateCard = false;
     boolean noCalls = false;
     
     if (person.getTask1() != null) {
@@ -307,8 +307,8 @@ public class VCardConverter {
       for (Task task : person.getTask1()) {
         if (StringUtils.isNotBlank(task.getText())) {
           String taskText = task.getText();
-          if (MECM_TASK1_PRIVATE_NUMBER.equals(taskText)) {
-            privateNumber = true;
+          if (MECM_TASK1_PRIVATE.equals(taskText)) {
+            privateCard = true;
           } else if (MECM_TASK1_NO_CALLS.equals(taskText)) {
             noCalls = true;
           } else {
@@ -322,7 +322,7 @@ public class VCardConverter {
       }
     }
 
-    vCard.addExtendedProperty(MECM_ADDITIONAL_PRIVATE_NUMBER, privateNumber ? "true" : "false");
+    vCard.addExtendedProperty(MECM_ADDITIONAL_PRIVATE, privateCard ? "true" : "false");
     vCard.addExtendedProperty(MECM_ADDITIONAL_NO_CALLS, noCalls ? "true" : "false");
   }
 
