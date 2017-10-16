@@ -34,6 +34,8 @@ import fi.metatavu.mecm.reader.model.Wt;
 
 public class ConverterTest {
  
+  private static final String TRUE = "true";
+  private static final String FALSE = "false";
   private static final String URI_TEMPLATE = "http://example.com/cards/%s";
   private static final String ORGANIZATION_ID = "test";
   
@@ -166,20 +168,24 @@ public class ConverterTest {
   public void testPrivateCard() {
     VCard vCard1 = loadTestCard(0);
     VCard vCard2 = loadTestCard(1);
+    VCard vCard3 = loadTestCard(2);
 
-    assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
-    assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals(FALSE, vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals(TRUE, vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals(TRUE, vCard3.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
   }
 
   @Test
   public void testNoCalls() {
     VCard vCard1 = loadTestCard(0);
     VCard vCard2 = loadTestCard(1);
+    VCard vCard3 = loadTestCard(2);
 
-    assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
-    assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
+    assertEquals(FALSE, vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
+    assertEquals(TRUE, vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
+    assertEquals(FALSE, vCard3.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
   }
-
+  
   private VCard loadTestCard(int index) {
     MecmReader mecmReader = new MecmReader();
     InputStream xmlStream = getClass().getClassLoader().getResourceAsStream("persons.xml");
@@ -190,7 +196,7 @@ public class ConverterTest {
     
     VCardConverter vCardConverter = new VCardConverter();
     List<VCard> vCards = vCardConverter.toVCards(ORGANIZATION_ID, URI_TEMPLATE, merex);
-    assertEquals(2, vCards.size());
+    assertEquals(3, vCards.size());
     VCard vCard = vCards.get(index);
     
     assertNotNull(vCard);
