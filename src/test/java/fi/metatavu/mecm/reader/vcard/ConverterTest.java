@@ -166,20 +166,24 @@ public class ConverterTest {
   public void testPrivateCard() {
     VCard vCard1 = loadTestCard(0);
     VCard vCard2 = loadTestCard(1);
+    VCard vCard3 = loadTestCard(2);
 
     assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
     assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals("true", vCard3.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
   }
 
   @Test
   public void testNoCalls() {
     VCard vCard1 = loadTestCard(0);
     VCard vCard2 = loadTestCard(1);
+    VCard vCard3 = loadTestCard(2);
 
     assertEquals("false", vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
     assertEquals("true", vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
+    assertEquals("false", vCard3.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_NO_CALLS).getValue());
   }
-
+  
   private VCard loadTestCard(int index) {
     MecmReader mecmReader = new MecmReader();
     InputStream xmlStream = getClass().getClassLoader().getResourceAsStream("persons.xml");
@@ -190,7 +194,7 @@ public class ConverterTest {
     
     VCardConverter vCardConverter = new VCardConverter();
     List<VCard> vCards = vCardConverter.toVCards(ORGANIZATION_ID, URI_TEMPLATE, merex);
-    assertEquals(2, vCards.size());
+    assertEquals(3, vCards.size());
     VCard vCard = vCards.get(index);
     
     assertNotNull(vCard);
