@@ -69,6 +69,7 @@ public class VCardConverter {
   public static final String MECM_ADDITIONAL_PRIVATE = "X-MECM-PRIVATE";
   public static final String MECM_ADDITIONAL_NO_CALLS = "X-MECM-NO-CALLS";
 
+  private static final String MECM_NAME_PRIVATE = "EI JULKINEN";
   private static final String MECM_TASK1_PRIVATE = "EI JULKINEN";
   private static final String MECM_TASK1_NO_CALLS = "EI PUHELUITA";
 
@@ -111,6 +112,10 @@ public class VCardConverter {
         handleRefs(organizationId, uriTemplate, person, vCard);
         handleNumbers(person, vCard);
         handleAdditional(person, vCard);
+
+        if (StringUtils.containsIgnoreCase(person.getName(), MECM_NAME_PRIVATE)) {
+          vCard.setExtendedProperty(MECM_ADDITIONAL_PRIVATE, "true");
+        }
         
         vCards.add(vCard);
       }
@@ -322,8 +327,8 @@ public class VCardConverter {
       }
     }
 
-    vCard.addExtendedProperty(MECM_ADDITIONAL_PRIVATE, privateCard ? "true" : "false");
-    vCard.addExtendedProperty(MECM_ADDITIONAL_NO_CALLS, noCalls ? "true" : "false");
+    vCard.setExtendedProperty(MECM_ADDITIONAL_PRIVATE, privateCard ? "true" : "false");
+    vCard.setExtendedProperty(MECM_ADDITIONAL_NO_CALLS, noCalls ? "true" : "false");
   }
 
   private Date toDate(OffsetDateTime dateTime) {
