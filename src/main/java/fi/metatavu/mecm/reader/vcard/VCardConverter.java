@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -70,9 +71,9 @@ public class VCardConverter {
   public static final String MECM_ADDITIONAL_NO_CALLS = "X-MECM-NO-CALLS";
 
   private static final String MECM_NAME_PRIVATE = "EI JULKINEN";
-  private static final String MECM_TASK1_PRIVATE = "EI JULKINEN";
   private static final String MECM_TASK1_NO_CALLS = "EI PUHELUITA";
-
+  private static final String[] MECM_TASK1_PRIVATES = { "ei julkinen", "ei_julkinen" };
+  
   public void toVCardFile(String organizationId, String uriTemplate, Merex merex, File outputFile) throws IOException {
     List<VCard> vCards = toVCards(organizationId, uriTemplate, merex);
     ChainingTextWriter writer = Ezvcard.write(vCards).version(VCardVersion.V4_0);
@@ -312,7 +313,7 @@ public class VCardConverter {
       for (Task task : person.getTask1()) {
         if (StringUtils.isNotBlank(task.getText())) {
           String taskText = task.getText();
-          if (MECM_TASK1_PRIVATE.equals(taskText)) {
+          if (ArrayUtils.contains(MECM_TASK1_PRIVATES, StringUtils.lowerCase(taskText))) {
             privateCard = true;
           } else if (MECM_TASK1_NO_CALLS.equals(taskText)) {
             noCalls = true;
