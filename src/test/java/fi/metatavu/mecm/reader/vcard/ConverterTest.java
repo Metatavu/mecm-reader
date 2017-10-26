@@ -170,11 +170,13 @@ public class ConverterTest {
     VCard vCard2 = loadTestCard(1);
     VCard vCard3 = loadTestCard(2);
     VCard vCard4 = loadTestCard(3);
+    VCard vCard5 = loadTestCard(4);
 
     assertEquals(FALSE, vCard1.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
     assertEquals(TRUE, vCard2.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
     assertEquals(TRUE, vCard3.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
     assertEquals(TRUE, vCard4.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
+    assertEquals(TRUE, vCard5.getExtendedProperty(VCardConverter.MECM_ADDITIONAL_PRIVATE).getValue());
   }
 
   @Test
@@ -198,7 +200,7 @@ public class ConverterTest {
     
     VCardConverter vCardConverter = new VCardConverter();
     List<VCard> vCards = vCardConverter.toVCards(ORGANIZATION_ID, URI_TEMPLATE, merex);
-    assertEquals(4, vCards.size());
+    assertEquals(5, vCards.size());
     VCard vCard = vCards.get(index);
     
     assertNotNull(vCard);
