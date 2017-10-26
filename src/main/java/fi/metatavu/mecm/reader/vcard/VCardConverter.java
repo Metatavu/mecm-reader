@@ -327,6 +327,10 @@ public class VCardConverter {
         vCard.addCategories(categories);
       }
     }
+    
+    if (StringUtils.equals("1", StringUtils.trim(person.getTask7()))) {
+      privateCard = true;
+    }
 
     vCard.setExtendedProperty(MECM_ADDITIONAL_PRIVATE, privateCard ? "true" : "false");
     vCard.setExtendedProperty(MECM_ADDITIONAL_NO_CALLS, noCalls ? "true" : "false");
