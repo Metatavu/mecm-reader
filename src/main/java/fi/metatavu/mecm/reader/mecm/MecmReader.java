@@ -30,7 +30,7 @@ public class MecmReader {
     XmlMapper xmlMapper = new XmlMapper();
     xmlMapper.registerModule(new JavaTimeModule());
     try {
-      String xml = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+      String xml = IOUtils.toString(inputStream, StandardCharsets.ISO_8859_1);
       xml = xml.replaceAll(INVALID_XML_CHARACTERS_PATTERN, "");
       return xmlMapper.readValue(xml, Merex.class);
     } catch (IOException e) {
