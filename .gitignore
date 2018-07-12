@@ -7,3 +7,4 @@
 /.travis_rsa.pub
 /travis_encrypted.tar
 /travis-encrypted.tar
+.vscode/launch.json
