@@ -25,6 +25,7 @@ import ezvcard.property.Email;
 import ezvcard.property.Nickname;
 import ezvcard.property.Note;
 import ezvcard.property.Organization;
+import ezvcard.property.RawProperty;
 import ezvcard.property.Related;
 import ezvcard.property.Telephone;
 import ezvcard.property.Timezone;
@@ -118,12 +119,19 @@ public class VCardConverter {
           vCard.setExtendedProperty(MECM_ADDITIONAL_PRIVATE, "true");
         }
         
-        vCards.add(vCard);
+        if (!isPrivateCard(vCard)) {
+          vCards.add(vCard);
+        }
       }
       
     }
     
     return vCards;
+  }
+  
+  private boolean isPrivateCard(VCard vCard) {
+    RawProperty property = vCard.getExtendedProperty(MECM_ADDITIONAL_PRIVATE);
+    return property != null && "true".equals(property.getValue());
   }
 
   @SuppressWarnings ({"squid:S106", "squid:S1166"})

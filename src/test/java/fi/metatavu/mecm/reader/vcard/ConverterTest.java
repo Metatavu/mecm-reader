@@ -200,7 +200,7 @@ public class ConverterTest {
     
     VCardConverter vCardConverter = new VCardConverter();
     List<VCard> vCards = vCardConverter.toVCards(ORGANIZATION_ID, URI_TEMPLATE, merex);
-    assertEquals(5, vCards.size());
+    assertEquals(4, vCards.size());
     VCard vCard = vCards.get(index);
     
     assertNotNull(vCard);
