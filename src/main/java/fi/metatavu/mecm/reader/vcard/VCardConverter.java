@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import ezvcard.parameter.TelephoneType;
 import ezvcard.property.Address;
 import ezvcard.property.Categories;
 import ezvcard.property.Email;
+import ezvcard.property.FormattedName;
 import ezvcard.property.Nickname;
 import ezvcard.property.Note;
 import ezvcard.property.Organization;
@@ -125,6 +127,8 @@ public class VCardConverter {
       }
       
     }
+    
+    vCards.sort(new VCardComparator());
     
     return vCards;
   }
@@ -399,6 +403,30 @@ public class VCardConverter {
   
   private String createCardUri(String uriTemplate, String id) {
     return String.format(uriTemplate, id);
+  }
+  
+  private class VCardComparator implements Comparator<VCard> {
+
+    @Override
+    public int compare(VCard o1, VCard o2) {
+      FormattedName formattedName1 = o1.getFormattedName();
+      FormattedName formattedName2 = o2.getFormattedName();
+      
+      if (formattedName1 == formattedName2) {
+        return 0;
+      }
+      
+      if (formattedName1 == null) {
+        return -1;
+      }
+      
+      if (formattedName2 == null) {
+        return 1;
+      }
+      
+      return formattedName1.getValue().compareTo(formattedName2.getValue());
+    }
+    
   }
   
 }
